@@ -4,12 +4,18 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Video extends Model
 {
     use HasFactory;
 
-   // protected $fillable = ['title', 'video_url', 'description'];
+    protected $fillable = ['title', 'video_file', 'description'];
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_video');
+    }
 
 
 }

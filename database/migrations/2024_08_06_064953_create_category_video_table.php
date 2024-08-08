@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('video_category', function (Blueprint $table) {
-            $table->foreignIdFor(Video::class);
+        Schema::create('category_video', function (Blueprint $table) {
             $table->foreignIdFor(Category::class);
+            $table->foreignIdFor(Video::class);
             $table->timestamps();
             $table->primary(['video_id', 'category_id']);
         });
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('video_category');
+        Schema::dropIfExists('category_video');
     }
 };
