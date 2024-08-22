@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Video;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Response;
 
@@ -18,6 +19,17 @@ class VideoController extends Controller
 
         ]);
     }
+    public function admin(){
+        if (Gate::denies('check-admin')){
+            abort(403);
+        }
+        return view('videos.admin', [
+            'videos' => Video::all(),
+            'categories' => Category::all(),
+
+        ]);
+    }
+
     //show single video
     public function show(Video $video){
         return view('videos.show', compact('video'));
@@ -37,8 +49,6 @@ class VideoController extends Controller
         ]);
         //dd($request->all());
         if ($request->hasFile('video_file')) {
-            echo "There is a file";
-            //dd($request->all());
             $videoPath = $request->video_file->store('videos', 'local');
         }
 
@@ -51,25 +61,11 @@ class VideoController extends Controller
     
         $video = Video::create($data);
         $video->categories()->attach($fields['categories']);
-        return redirect('/');
+        return redirect('/admin');
     }
     // to display video
     public function serve($fileName){
-        // 
-        // if($exists) {
-      
-        //     //get content of image
-        //     $content = Storage::get('videos/'.$fileName);
-            
-        //     //get mime type of image
-        //     $mime = Storage::mimeType('videos/'.$fileName);      //prepare response with image content and response code
-        //     $response = Response::make($content, 200);      //set header 
-        //     $response->header("Content-Type", $mime);      // return response
-        //     return $response;
-        //  } else {
-        //     abort(404);
-        //  }
-
+        
     $exists = Storage::disk('local')->exists('videos/'.$fileName);
     $filePath = storage_path('app/videos/'.$fileName);
     if (!$exists) {
@@ -109,7 +105,8 @@ class VideoController extends Controller
     public function destroy(Video $video){
         $video->delete();
         $video->categories()->detach();
-        return redirect('/');
+        Storage::delete($video->video_file);
+        return redirect('/admin');
     }
     
 }

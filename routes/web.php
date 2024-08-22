@@ -1,35 +1,39 @@
 <?php
 
-use App\Models\Video;
-use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Response;
 use App\Http\Controllers\VideoController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CategoryController;
-
-//All videos
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+use App\Http\Controllers\SubscriptionController;
 
 Route::get('/', [VideoController::class, 'index'])->name('video.index');
-
-//Show "Create video" form
-Route::get('/videos/create', [VideoController::class, 'create'])->name('video.create');
-
-//Store Video
-Route::post('/videos', [VideoController::class, 'store'])->name('video.store');
-
-//delete video
-Route::delete('/videos/{video}', [VideoController::class, 'destroy'])->name('video.destroy');
-
-//Single Video
-Route::get('/videos/{video}', [VideoController::class, 'show'])->name('video.show');
-
+Route::get('/admin', [VideoController::class, 'admin'])->name('video.admin');
 //Serves video stream
 Route::get('/videos/serve/{filename}', [VideoController::class, 'serve'])->name('video.serve');
+Route::get('/subscriptions/{category}', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
 
-Route::get('/categories/{category}', [CategoryController::class, 'filterCategory'])->name('category.filter');
 
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //Show "Create video" form
+    Route::get('/videos/create', [VideoController::class, 'create'])->name('video.create');
+    //Store Video
+    Route::post('/videos', [VideoController::class, 'store'])->name('video.store');
+    //delete video
+    Route::delete('/videos/{video}', [VideoController::class, 'destroy'])->name('video.destroy');
+    //Single Video
+    Route::get('/videos/{video}', [VideoController::class, 'show'])->name('video.show');
+    //filter videos
+    Route::get('/categories/{category}', [CategoryController::class, 'filterCategory'])->name('category.filter');
+    Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscription.index');
+});
+
+require __DIR__.'/auth.php';

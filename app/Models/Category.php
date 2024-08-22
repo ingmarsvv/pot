@@ -13,7 +13,11 @@ class Category extends Model
     //protected $fillable = ['id', 'cat_name'];
 
     public function videos(): BelongsToMany{
-        return $this->belongsToMany(Video::class, 'category_video');
+        return $this->belongsToMany(Video::class, 'category_video')->withTimestamps();
+    }
+
+    public function users(): BelongsToMany{
+        return $this->belongsToMany(User::class, 'category_user')->withTimestamps();
     }
 
 }
