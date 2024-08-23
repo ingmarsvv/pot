@@ -7,11 +7,6 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\SubscriptionController;
 
 Route::get('/', [VideoController::class, 'index'])->name('video.index');
-Route::get('/admin', [VideoController::class, 'admin'])->name('video.admin');
-//Serves video stream
-Route::get('/videos/serve/{filename}', [VideoController::class, 'serve'])->name('video.serve');
-Route::get('/subscriptions/{category}', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
-
 
 
 Route::get('/dashboard', function () {
@@ -31,9 +26,21 @@ Route::middleware('auth')->group(function () {
     Route::delete('/videos/{video}', [VideoController::class, 'destroy'])->name('video.destroy');
     //Single Video
     Route::get('/videos/{video}', [VideoController::class, 'show'])->name('video.show');
+    //Show edit form
+    Route::get('/videos/{video}/edit', [VideoController::class, 'edit'])->name('video.edit');
+    //Serves video stream
+    Route::get('/videos/serve/{filename}', [VideoController::class, 'serve'])->name('video.serve');
+    
+    //Show "Create category" form
+    Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create');
+    //Store category
+    Route::post('/categories', [CategoryController::class, 'store'])->name('category.store');
     //filter videos
-    Route::get('/categories/{category}', [CategoryController::class, 'filterCategory'])->name('category.filter');
+    Route::get('/categories/{name}', [CategoryController::class, 'filterCategory'])->name('category.filter');
+
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('subscription.index');
+    Route::get('/subscriptions/{category}', [SubscriptionController::class, 'subscribe'])->name('subscription.subscribe');
+    Route::get('/admin', [VideoController::class, 'admin'])->name('video.admin');
 });
 
 require __DIR__.'/auth.php';

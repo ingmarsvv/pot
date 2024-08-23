@@ -20,10 +20,11 @@ class SubscriptionController extends Controller
         $user = $request->user();
         if (!$user->categories()->where('category_id', $categoryID)->exists()){
             $user->categories()->attach($categoryID);
-            return to_route('subscription.index', ['subscribed' => true]);
+            session()->flash('success', 'Subscription successful!');
         } else if ($user->categories()->where('category_id', $categoryID)->exists()){
-            return to_route('subscription.index', ['subscribed' => false]);
+            session()->flash('info', 'You are already subscribed to this category.');
         }
+        return redirect()->back();
         
     }
 }

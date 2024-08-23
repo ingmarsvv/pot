@@ -11,6 +11,7 @@ class Category extends Model
     use HasFactory;
 
     //protected $fillable = ['id', 'cat_name'];
+    protected $fillable = ['cat_name', 'image', 'description'];
 
     public function videos(): BelongsToMany{
         return $this->belongsToMany(Video::class, 'category_video')->withTimestamps();

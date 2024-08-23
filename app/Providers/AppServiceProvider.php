@@ -24,5 +24,16 @@ class AppServiceProvider extends ServiceProvider
         Gate::define('check-admin', function(User $user){
             return $user->name === 'admin';
         });
+
+        Gate::define('check-subscription', function(User $user, $categoryID){
+            if ($user->categories()->where('category_id', $categoryID)->exists()){
+                return true;
+            } else {
+                return false;
+            }
+        });
+
+
     }
+
 }

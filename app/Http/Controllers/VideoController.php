@@ -37,7 +37,7 @@ class VideoController extends Controller
     //show create form
     public function create(){
         $categories = Category::all();
-         return view('videos.create', compact('categories'));
+        return view('videos.create', compact('categories'));
     }
     //save video
     public function store(Request $request){
