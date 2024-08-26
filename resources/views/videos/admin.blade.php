@@ -10,7 +10,7 @@
         <ul>
           @foreach($categories as $category)
           <li>
-            <a href="{{ route('category.filter', $category->id) }}">{{ $category->cat_name }}</a>
+            <a href="{{ route('category.filter', $category->cat_name) }}">{{ $category->cat_name }}</a>
           </li>
           @endforeach
         </ul>

@@ -28,6 +28,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/videos/{video}', [VideoController::class, 'show'])->name('video.show');
     //Show edit form
     Route::get('/videos/{video}/edit', [VideoController::class, 'edit'])->name('video.edit');
+    //Edit video
+    Route::put('/videos/{video}', [VideoController::class, 'update'])->name('video.update');
     //Serves video stream
     Route::get('/videos/serve/{filename}', [VideoController::class, 'serve'])->name('video.serve');
     

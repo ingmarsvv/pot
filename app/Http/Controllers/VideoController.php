@@ -108,5 +108,37 @@ class VideoController extends Controller
         Storage::delete($video->video_file);
         return redirect('/admin');
     }
+
+    //show edit form
+    public function edit(Video $video){
+        return view('videos.edit',[
+            'belongToCategories' => $video->categories()->get(),
+            'categories' => Category::all(),
+            'video' => $video,
+        ]);
+    }
+    //update video
+    public function update(Request $request, Video $video){
+        //dd('Update method called');
+        $fields = $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+        ]);
+        //dd($request->all());
+        if ($request->hasFile('video_file')) {
+            $videoPath = $request->video_file->store('videos', 'local');
+        }
+
+        $data = [
+            'title' => $fields['title'],
+            'description' => $fields['description'],
+            'video_file' => $videoPath ?? $video->video_file,
+            'categories' => $request["categories"],
+        ];
+    
+        $video->update($data);
+        $video->categories()->sync($data['categories']);
+        return redirect('/admin');
+    }
     
 }
