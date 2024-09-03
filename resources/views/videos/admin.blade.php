@@ -1,33 +1,25 @@
 @extends('layouts.layout')
 
 @section('content')
-{{-- tailwind<h1>{{Virsraksts}}</h1> --}}
-<div class="flex flex-row gap-x-2">
-  <div class="w-1/6 bg-orange-50">
-    <div class="mx-4">
-      <div class="text-xl mb-3">Select your category</div>
-      <div>
-        <ul>
-          @foreach($categories as $category)
-          <li>
-            <a href="{{ route('category.filter', $category->cat_name) }}">{{ $category->cat_name }}</a>
-          </li>
-          @endforeach
-        </ul>
-      </div>
-    </div>
 
-  </div>
+<script src="{{ asset('/js/functions.js') }}"></script>
+
+<div class="flex flex-row gap-x-2">
+  <ul class="w-1/6 bg-orange-50 flex flex-col gap-3">
+          <li class="bg-green-300 px-3 rounded-xl mt-3"><a href="{{ route('video.create')}}">Add new video</a></li>
+          <li class="bg-green-300 px-3 rounded-xl"><a href="{{ route('category.create')}}">Add new category</a></li>
+  </ul>
   <div class="grow bg-slate-200">
-    <div>
-      <div class="bg-green-400 p-2 w-20 max-w-20 inline-block rounded-lg">
-      <a href="{{ route('video.create')}}">Add new video</a>
+    <div class="flex justify-between mt-3">
+      <div>
+      </div>
+      <ul class="flex gap-2" x-data="highlightCategory()">
+          <li>Filter:</li>
+        @foreach ($categories as $category)
+          <li id="{{ $category->cat_name }}" class="flex items-center justify-center bg-black text-white px-3 rounded-xl "><a href="/admin?category={{ $category->cat_name }}">{{ $category->cat_name }}</a></li>
+        @endforeach
+      </ul>
     </div>
-      <div class="bg-green-400 p-2 w-20 max-w-20 mt-3 inline-block rounded-lg">
-        <a href="{{ route('category.create')}}">Add new category</a>
-    </div>
-    </div>
-    
     <div class="mx-auto max-w-7xl px-6 pb-6 lg:px-8">
       <div class="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         @foreach($videos as $video)

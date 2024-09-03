@@ -6,21 +6,20 @@
     <title>Pot</title>
     {{-- <script src="https://cdn.tailwindcss.com"></script> --}}
     <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-        <style>
-          /* Ensure the dropdown parent is positioned relatively */
-          .dropdown-categories {
-              position: relative;
-          }
-  
-          /* Show the dropdown-menu when the dropdown parent is hovered */
-          .dropdown-categories:hover .dropdown-menu-categories {
-              display: block;
-          }
-      </style>
+    <!-- Scripts -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>
+      .dropdown-categories {
+          position: relative;
+      }
+      .dropdown-categories:hover .dropdown-menu-categories {
+          display: block;
+      }
+    </style>
+    <link rel="stylesheet" href="{{ asset('css/main.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <body>
     
@@ -50,7 +49,7 @@
             </li>
             
           <li>
-            <a href="{{ route('subscription.index') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 md:dark:hover:bg-transparent">Your subscriptions</a>
+            <a href="{{ route('subscription.index') }}" class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-blue-500 md:dark:hover:bg-transparent">Subscriptions</a>
           </li>
           @can('check-admin')
           <li>

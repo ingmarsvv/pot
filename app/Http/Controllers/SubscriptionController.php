@@ -24,7 +24,7 @@ class SubscriptionController extends Controller
         } else if ($user->categories()->where('category_id', $categoryID)->exists()){
             session()->flash('info', 'You are already subscribed to this category.');
         }
-        return redirect()->back();
+        return redirect()->route('subscription.index');
         
     }
 }

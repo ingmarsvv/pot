@@ -44,10 +44,10 @@ class CategoryController extends Controller
 
         // Fetch videos associated with the category
         $videos = $category->videos()->get();
-        if (Gate::denies('check-subscription', $category->id)){
-            session()->flash('Warning', 'Jūs kategoriju "' . $category->cat_name. '" neesat abonējis. Lai aplūkotu tās saturu, lūdzu, abonējiet kategoriju!!');
-            return to_route('subscription.index');
-        }
+        // if (Gate::denies('check-subscription', $category->id)){
+        //     session()->flash('Warning', 'Jūs kategoriju "' . $category->cat_name. '" neesat abonējis. Lai aplūkotu tās saturu, lūdzu, abonējiet kategoriju!!');
+        //     return to_route('subscription.index');
+        // }
         return view('videos.categoryFilter', [
             'category' => $category,
             'videos' => $videos,

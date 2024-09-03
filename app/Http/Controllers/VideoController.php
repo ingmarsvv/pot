@@ -23,16 +23,22 @@ class VideoController extends Controller
         if (Gate::denies('check-admin')){
             abort(403);
         }
+        $categories = Category::all();
+        if(request('category')){
+            $videos = Video::latest()->filterByCategory(request('category'))->get();
+        } else {
+            $videos = Video::all();
+        }
         return view('videos.admin', [
-            'videos' => Video::all(),
-            'categories' => Category::all(),
-
+            'videos' => $videos,
+            'categories' => $categories,
         ]);
     }
 
     //show single video
     public function show(Video $video){
-        return view('videos.show', compact('video'));
+        $comments = CommentController::serve($video);
+        return view('videos.show', compact('video', 'comments'));
     }
     //show create form
     public function create(){

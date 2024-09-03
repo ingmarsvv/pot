@@ -10,8 +10,8 @@
           imgAlt: 'Vibrant abstract painting with swirling blue and light pink hues on a canvas.',  
           title: '{{ $category->cat_name}}',
           description: '{{ $category->description}}',    
-          ctaUrl: '{{ route('subscription.index')}}',
-          ctaText: 'Abonē',          
+          ctaUrl: '{{ route('category.filter', $category->cat_name)}}',
+          ctaText: 'Uzzini vairāk',          
       }, 
       @endforeach               
            
@@ -61,15 +61,15 @@
  
   <!-- slides -->
   <!-- Change min-h-[50svh] to your preferred height size -->
-  <div class="relative min-h-[80svh] w-full">
+  <div class="relative min-h-[94.4svh] w-full">
       <template x-for="(slide, index) in slides">
           <div x-cloak x-show="currentSlideIndex == index + 1" class="absolute inset-0" x-transition.opacity.duration.1000ms>
               
               <!-- Title and description -->
               <div class="lg:px-32 lg:py-14 absolute inset-0 z-10 flex flex-col items-center justify-end gap-2 bg-gradient-to-t from-neutral-950/85 to-transparent px-16 py-12 text-center">
-                  <h3 class="w-full lg:w-[80%] text-balance text-2xl lg:text-3xl font-bold text-white" x-text="slide.title" x-bind:aria-describedby="'slide' + (index + 1) + 'Description'"></h3>
-                  <p class="lg:w-1/2 w-full text-pretty text-sm text-neutral-300" x-text="slide.description" x-bind:id="'slide' + (index + 1) + 'Description'"></p>
-                  <button type="button" x-cloak x-show="slide.ctaUrl !== null" x-on:click="location.href = slide.ctaUrl" class="mt-2 cursor-pointer whitespace-nowrap rounded-md border border-white bg-transparent px-4 py-2 text-center text-xs font-medium tracking-wide text-white transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-onSurfaceDarkStrong active:opacity-100 active:outline-offset-0 md:text-sm" x-text="slide.ctaText"></button>
+                  <h3 class="w-full lg:w-[80%] text-balance text-2xl lg:text-7xl uppercase font-bold text-white" x-text="slide.title" x-bind:aria-describedby="'slide' + (index + 1) + 'Description'"></h3>
+                  <p class="lg:w-1/2 w-full text-pretty text-lg text-neutral-300" x-text="slide.description" x-bind:id="'slide' + (index + 1) + 'Description'"></p>
+                  <button type="button" x-cloak x-show="slide.ctaUrl !== null" x-on:click="location.href = slide.ctaUrl" class="mt-2 mb-6 cursor-pointer whitespace-nowrap rounded-md border border-white bg-transparent px-4 py-2 text-center text-xs font-medium tracking-wide text-white transition hover:opacity-75 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-onSurfaceDarkStrong active:opacity-100 active:outline-offset-0 md:text-xl" x-text="slide.ctaText"></button>
               </div>
 
               <img class="absolute w-full h-full inset-0 object-cover text-neutral-600 dark:text-neutral-300" x-bind:src="slide.imgSrc" x-bind:alt="slide.imgAlt" />
