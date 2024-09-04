@@ -14,7 +14,7 @@ class VideoController extends Controller
     //show all videos
     public function index(){
         return view('videos.index', [
-            'videos' => Video::all(),
+            // 'videos' => Video::all(),
             'categories' => Category::all(),
 
         ]);
@@ -41,12 +41,18 @@ class VideoController extends Controller
         return view('videos.show', compact('video', 'comments'));
     }
     //show create form
-    public function create(){
+    public function create(Request $request){
+        if ($request->user()->cannot('create', Video::class)){
+            abort(403);
+        }
         $categories = Category::all();
         return view('videos.create', compact('categories'));
     }
     //save video
     public function store(Request $request){
+        if ($request->user()->cannot('create', Video::class)){
+            abort(403);
+        }
         $fields = $request->validate([
             'title' => 'required',
             'description' => 'required',
@@ -108,7 +114,10 @@ class VideoController extends Controller
     }
 
     //delete video
-    public function destroy(Video $video){
+    public function destroy(Request $request, Video $video){
+        if ($request->user()->cannot('delete', Video::class)){
+            abort(403);
+        }
         $video->delete();
         $video->categories()->detach();
         Storage::delete($video->video_file);
@@ -116,7 +125,11 @@ class VideoController extends Controller
     }
 
     //show edit form
-    public function edit(Video $video){
+    
+    public function edit(Request $request, Video $video){
+        if ($request->user()->cannot('update', Video::class)){
+            abort(403);
+        }
         return view('videos.edit',[
             'belongToCategories' => $video->categories()->get(),
             'categories' => Category::all(),
@@ -125,7 +138,9 @@ class VideoController extends Controller
     }
     //update video
     public function update(Request $request, Video $video){
-        //dd('Update method called');
+        if ($request->user()->cannot('update', Video::class)){
+            abort(403);
+        }
         $fields = $request->validate([
             'title' => 'required',
             'description' => 'required',

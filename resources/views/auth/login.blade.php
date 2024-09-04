@@ -38,7 +38,11 @@
                     {{ __('Forgot your password?') }}
                 </a>
             @endif
-
+            <a
+                href="{{ route('register') }}"
+                class="rounded-md px-3 py-2 text-black ring-1 ring-transparent transition hover:text-black/70 focus:outline-none focus-visible:ring-[#FF2D20] text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:dark:hover:text-blue-500 md:dark:hover:bg-transparent duration-150">
+                Register
+            </a>
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>

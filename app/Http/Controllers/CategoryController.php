@@ -21,7 +21,7 @@ class CategoryController extends Controller
         $fields = $request->validate([
             'title' => 'required',
             'description' => 'required',
-            'image_file' => 'required',
+            'image_file' => 'required|image',
         ]);
         //dd($request->all());
         if ($request->hasFile('image_file')) {
@@ -39,10 +39,7 @@ class CategoryController extends Controller
     }
 
     public function filterCategory($cat_name){
-        // Fetch the category by name
         $category = Category::where('cat_name', $cat_name)->firstOrFail();
-
-        // Fetch videos associated with the category
         $videos = $category->videos()->get();
         // if (Gate::denies('check-subscription', $category->id)){
         //     session()->flash('Warning', 'Jūs kategoriju "' . $category->cat_name. '" neesat abonējis. Lai aplūkotu tās saturu, lūdzu, abonējiet kategoriju!!');

@@ -25,4 +25,12 @@ class CommentController extends Controller
         $comments = Comment::where('video_id', $video->id)->with('user:id,name')->orderBy('created_at')->get();
         return $comments;
     }
+
+    public function destroy(Comment $comment){
+        $user = Auth::user();
+        if ($user->id == $comment->user_id){
+            $comment->delete();
+        }
+        return redirect()->back();
+    }
 }

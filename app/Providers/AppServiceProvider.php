@@ -47,6 +47,12 @@ class AppServiceProvider extends ServiceProvider
             
         });
 
+        Blade::if('commentAuthor', function($commentUserID){
+            if (Auth::user()->id == $commentUserID){
+                return true;
+            }
+        });
+
 
     }
 

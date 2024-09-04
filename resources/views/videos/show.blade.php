@@ -59,7 +59,14 @@
             <footer class="flex justify-between items-center mb-2">
                 <div class="flex items-center">
                     <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold">{{ $comment->user->name }}</p>
-                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ $comment->created_at}}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mr-3">{{ $comment->created_at}}</p>
+                    @commentAuthor($comment->user_id)
+                    <form method="post" action="{{ route('comment.destroy', $comment)}}">
+                      @csrf
+                      @method('DELETE')
+                      <button class="text-sm text-gray-600 dark:text-gray-400 p-1 rounded-lg hover:bg-stone-200">Delete comment</button>
+                    </form>
+                    @endcommentAuthor
                 </div>
             </footer>
             <p class="text-gray-500 dark:text-gray-400">{{ $comment->text}}</p>

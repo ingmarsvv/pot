@@ -21,10 +21,21 @@
         </div>
     </div>
 @endif
-<div class="mt-16 mx-auto w-5/6 lg:max-w-screen-lg">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+<div class="text-center mt-14">
+    <h1 class="text-6xl font-extrabold tracking-tight text-[#2E3440] sm:text-5xl">
+        This is all you need.
+    </h1>
+    <p class="mx-auto mt-3 max-w-md text-base text-gray-500 sm:text-lg md:mt-5 md:max-w-3xl md:text-xl">This is a subscription page, once you subscribe to the specific category you can view all of its content.</p>
+    <div class="mx-auto mt-5 flex max-w-md flex-col gap-y-3 gap-x-6 sm:flex-row sm:justify-center md:mt-8">
+        
+    </div>
+  </div>
+
+<div class="my-16 mx-auto w-5/6 lg:max-w-screen-lg">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" x-data="highlightOnLoad()">
         @foreach ($categories as $category)
-            <article class="flex flex-col" x-data="highlightOnLoad()">
+            <article class="flex flex-col" >
                 <div><img src="{{ $category->image}}" alt="" ></div>
                 <div><h3 class="text-2xl font-extrabold" >{{ $category->cat_name}}</h3></div>
                 <div>{{ $category->description}}</div>
