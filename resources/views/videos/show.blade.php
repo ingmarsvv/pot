@@ -3,7 +3,7 @@
 @section('content')
   <div class="mx-auto px-6 pb-6 lg:px-8">
     <div class="mx-auto mt-10 grid grid-cols-1 gap-x-12 gap-y-16 pt-10 sm:mt-16 sm:pt-16 lg:mx-0 lg:max-w-full lg:grid-cols-2">
-      <article class="flex flex-col items-start justify-between w-full">
+      <article class="flex flex-col items-start w-full">
           <video class="w-full rounded-lg" controls="true" preload="auto" muted playsinline>
             <source src="{{ route('video.serve', basename($video->video_file)) }}" type="video/mp4">
             Your browser does not support the video tag.
@@ -18,18 +18,26 @@
               <div class="">
                 <form action="{{ route('video.storeLike', $video) }}" method="POST">
                   @csrf
-                  <button type="submit" class="mt-3 w-28 text-grey-700 border border-grey-700 hover:bg-stone-200  focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
-                    <svg class="w-5 h-5" aria-hidden="true"  fill="currentColor" viewBox="0 0 18 18">
-                    <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
-                    </svg>
-                    @php
-                      use App\Http\Controllers\LikeController;
-                       (int) $likeCount = LikeController::countLikes($video); 
-                    @endphp
-                    <p class="ml-2 w-full text-center" > {{ 3 + $likeCount }} likes</p>
-                  </button>
+                  @php
+                    use App\Http\Controllers\LikeController;
+                    (int) $likeCount = LikeController::countLikes($video); 
+                  @endphp
+                  @if (LikeController::checkUserLiked($video))
+                    <button type="submit" class="mt-3  text-gray-900 border border-grey-900 hover:bg-stone-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                      <svg class="w-5 h-5" aria-hidden="true"  fill="currentColor" viewBox="0 0 18 18">
+                        <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
+                      </svg>    
+                      <p class="ml-2 w-full text-center" >You and {{ 3 + $likeCount - 1 }} others liked this video</p>
+                    </button>
+                  @else
+                    <button type="submit" class="mt-3 w-28 text-gray-400 border border-grey-700 hover:bg-stone-200 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+                      <svg class="w-5 h-5" aria-hidden="true"  fill="currentColor" viewBox="0 0 18 18">
+                        <path d="M3 7H1a1 1 0 0 0-1 1v8a2 2 0 0 0 4 0V8a1 1 0 0 0-1-1Zm12.954 0H12l1.558-4.5a1.778 1.778 0 0 0-3.331-1.06A24.859 24.859 0 0 1 6 6.8v9.586h.114C8.223 16.969 11.015 18 13.6 18c1.4 0 1.592-.526 1.88-1.317l2.354-7A2 2 0 0 0 15.954 7Z"/>
+                      </svg>    
+                      <p class="ml-2 w-full text-center" > {{ 3 + $likeCount }} likes</p>
+                    </button>
+                  @endif                     
                 </form>
-                
               </div>
             </div>
             <p class="mt-5 text-sm text-justify leading-6 text-gray-600">{{$video->description}}</p>

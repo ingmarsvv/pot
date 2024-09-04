@@ -36,7 +36,11 @@ class VideoController extends Controller
     }
 
     //show single video
-    public function show(Video $video){
+    public function show(Video $video, $categoryID){
+
+        if (Gate::denies('check-subscription', $categoryID )){
+            abort(403);
+        }
         $comments = CommentController::serve($video);
         return view('videos.show', compact('video', 'comments'));
     }

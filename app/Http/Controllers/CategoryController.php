@@ -11,13 +11,19 @@ use Illuminate\Support\Facades\Gate;
 class CategoryController extends Controller
 {   
     //show create form
-    public function create(){
+    public function create(Request $request){
+        if ($request->user()->cannot('create', Category::class)){
+            abort(403);
+        }
         return view('categories.create');
     }
 
     //store category
     //save video
     public function store(Request $request){
+        if ($request->user()->cannot('create', Category::class)){
+            abort(403);
+        }
         $fields = $request->validate([
             'title' => 'required',
             'description' => 'required',

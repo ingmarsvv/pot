@@ -37,7 +37,7 @@
         @foreach ($categories as $category)
             <article class="flex flex-col" >
                 <div><img src="{{ $category->image}}" alt="" ></div>
-                <div><h3 class="text-2xl font-extrabold" >{{ $category->cat_name}}</h3></div>
+                <div> <a class="text-2xl font-extrabold" href="{{ route('category.filter', $category->cat_name)}}">{{ $category->cat_name}}</a></div>
                 <div>{{ $category->description}}</div>
                 @isSubscribed($category->id)
                 <div class="bg-slate-400 flex w-full items-center justify-center rounded border border-transparent px-8 py-2.5 font-medium text-white transition-colors sm:w-auto">Subscribed</div>

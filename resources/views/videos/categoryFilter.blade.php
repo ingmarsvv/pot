@@ -36,7 +36,7 @@
             </video>
             <div class="group relative">
               <h3 class="mt-3 text-3xl font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                <a href="{{ route('video.show', $videos[0]) }}">
+                <a href="{{ route('video.show', [$videos[0], $category->id]) }}">
                   <span class="absolute inset-0"></span>
                   {{$videos[0]->title}}
                 </a>
@@ -58,12 +58,12 @@
             @isSubscribed($categoryID)
               <article class="flex max-w-2xl flex-col justify-between">
                 <video class="w-full max-h-96 rounded-lg" controls="true" preload="auto" muted playsinline>
-                  <source src="{{ route('video.serve', basename($video->video_file)) }}" type="video/mp4">
+                  <source src="{{ route('video.serve', basename($video->video_file) ) }}" type="video/mp4">
                   Your browser does not support the video tag.
                 </video>
                 <div class="group relative">
                   <h3 class="mt-3 text-3xl font-semibold leading-6 text-gray-900 group-hover:text-gray-600">                 
-                    <a href="{{ route('video.show', $video) }}"> 
+                    <a href="{{ route('video.show', [$video, $categoryID]) }}"> 
                       <span class="absolute inset-0"></span>
                     {{$video->title}}
                     </a>

@@ -24,7 +24,7 @@ Route::middleware('auth')->group(function () {
     //delete video
     Route::delete('/videos/{video}', [VideoController::class, 'destroy'])->name('video.destroy');
     //Single Video
-    Route::get('/videos/{video}', [VideoController::class, 'show'])->name('video.show');
+    Route::get('/videos/{video}/{category}', [VideoController::class, 'show'])->name('video.show');
     //Show edit form
     Route::get('/videos/{video}/edit', [VideoController::class, 'edit'])->name('video.edit');
     //Edit video
