@@ -23,7 +23,5 @@ class CategoryPolicy
     {
         return false;
     }
-
-    
   
 }
