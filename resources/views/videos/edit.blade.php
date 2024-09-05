@@ -5,7 +5,7 @@
     <h2 class="text-2xl font-bold uppercase mb-6 text-center">Edit Video</h2>
     <p class="mb-4 text-center">Edit: {{ $video->title}}</p>
 </header>
-<form method="POST" action="{{ route('video.update', $video->id) }}" enctype="multipart/form-data" class="max-w-sm mx-auto mt-10">
+<form method="POST" action="{{ route('video.update', $video->id) }}" enctype="multipart/form-data" class="max-w-sm mx-auto my-10">
     @csrf
     @method('PUT')
     <div class="mb-5">

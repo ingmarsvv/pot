@@ -7,6 +7,7 @@ use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {   
@@ -17,7 +18,6 @@ class CategoryController extends Controller
         }
         return view('categories.create');
     }
-
     //store category
     //save video
     public function store(Request $request){
@@ -56,4 +56,22 @@ class CategoryController extends Controller
             'videos' => $videos,
         ]);
     }
+
+    // public function destroy(Request $request, Video $video){
+    //     if ($request->user()->cannot('delete', Video::class)){
+    //         abort(403);
+    //     }
+    //     $video->delete();
+    //     $video->categories()->detach();
+    //     Storage::delete($video->video_file);
+    //     return redirect('/admin');
+    // }
+
+    public function destroy(Category $category){
+        $category->delete();
+        Storage::delete($category->image);
+        return redirect('/admin');
+    }
+
+
 }

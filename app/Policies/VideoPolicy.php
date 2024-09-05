@@ -9,36 +9,36 @@ use Illuminate\Auth\Access\Response;
 class VideoPolicy
 {
 
-    public function before(User $user): bool|null
+    /**
+     * Determine whether the user can create models.
+     */
+    public function create(User $user): bool
     {
         if ($user->name === 'admin'){
             return true;
         } 
-        return null;   
-    }
-    
-
-    /**
-     * Determine whether the user can create models.
-     */
-    public function create(): bool
-    {
         return false;
     }
 
     /**
      * Determine whether the user can update the model.
      */
-    public function update(): bool
+    public function update(User $user): bool
     {
-        return false;
+        if ($user->name === 'admin'){
+            return true;
+        } 
+        return false;  
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(): bool
+    public function delete(User $user): bool
     {
-        return false;
+        if ($user->name === 'admin'){
+            return true;
+        } 
+        return false; 
     }
 }

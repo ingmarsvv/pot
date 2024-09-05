@@ -37,8 +37,11 @@ class VideoController extends Controller
 
     //show single video
     public function show(Video $video, $categoryID){
-
-        if (Gate::denies('check-subscription', $categoryID )){
+        if (Gate::allows('check-admin')){
+            $comments = CommentController::serve($video);
+            return view('videos.show', compact('video', 'comments'));
+        }
+        if (Gate::denies('check-subscription', $categoryID)){
             abort(403);
         }
         $comments = CommentController::serve($video);
@@ -129,9 +132,8 @@ class VideoController extends Controller
     }
 
     //show edit form
-    
     public function edit(Request $request, Video $video){
-        if ($request->user()->cannot('update', Video::class)){
+        if ($request->user()->cannot('update', $video)){
             abort(403);
         }
         return view('videos.edit',[
@@ -140,6 +142,7 @@ class VideoController extends Controller
             'video' => $video,
         ]);
     }
+
     //update video
     public function update(Request $request, Video $video){
         if ($request->user()->cannot('update', Video::class)){
@@ -149,7 +152,6 @@ class VideoController extends Controller
             'title' => 'required',
             'description' => 'required',
         ]);
-        //dd($request->all());
         if ($request->hasFile('video_file')) {
             $videoPath = $request->video_file->store('videos', 'local');
         }

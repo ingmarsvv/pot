@@ -51,7 +51,7 @@
             @csrf
               <div class="py-2 px-4 mb-4 w-3/4 lg:max-w-2xl bg-white rounded-lg rounded-t-lg border border-gray-200 dark:bg-gray-800 dark:border-gray-700">
                   <label for="comment" class="sr-only">Your comment</label>
-                  <textarea rows="2" id="comment" name="comment" class=" w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" placeholder="Pievienojiet komentāru..."
+                  <textarea rows="2" id="comment" name="comment" class=" w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800" placeholder="Add comment..."
                   ></textarea>
                   @error('comment')
                   <p class="text-red-500">Aizpildiet šo lauku</p>
